@@ -44,14 +44,14 @@ namespace Business.Concrete
         {
             if (car.Name.Length < 2)
             {
-                return new ErrorDataResult<Car>(MessagesAboutCar.CarNameInvalid);
+                return new ErrorResult(MessagesAboutCar.CarNameInvalid);
             }
             else if(car.DailyPrice <= 0)
             {
-                return new ErrorDataResult<Car>(MessagesAboutCar.CarDailyPriceInvalid);
+                return new ErrorResult(MessagesAboutCar.CarDailyPriceInvalid);
             }
             _carDal.Add(car);
-            return new SuccessDataResult<Car>(MessagesAboutCar.CarAdded);
+            return new SuccessResult(MessagesAboutCar.CarAdded);
 
             }
 
@@ -59,26 +59,25 @@ namespace Business.Concrete
         {
             if (car.Name.Length < 2)
             {
-                return new ErrorDataResult<Car>(MessagesAboutCar.CarNameInvalid);
+                return new ErrorResult(MessagesAboutCar.CarNameInvalid);
             }
             else if(car.DailyPrice <= 0)
             {
-                return new ErrorDataResult<Car>(MessagesAboutCar.CarDailyPriceInvalid);
+                return new ErrorResult(MessagesAboutCar.CarDailyPriceInvalid);
             }
             _carDal.Update(car);
-            return new SuccessDataResult<Car>(MessagesAboutCar.CarUpdated);
+            return new SuccessResult(MessagesAboutCar.CarUpdated);
         }
 
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
-            return new SuccessDataResult<Car>(MessagesAboutCar.CarDeleted);   
+            return new SuccessResult(MessagesAboutCar.CarDeleted);   
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            _carDal.GetCarDetails();
-            return new SuccessDataResult<List<CarDetailDto>>(MessagesAboutCar.CarsListed); 
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(),MessagesAboutCar.CarsListed); 
         }
     }
 }

@@ -11,6 +11,6 @@ namespace Business.Constants
         public static string BrandsListed = "Brands Listed.";
         public static string BtandGetted = "Brand getted";
         public static string BrandUpdated = "Brand successfuly updated.";
-        public static string BrandDeleted = "Brand deleted";
+        public static string BrandDeleted = "Brand successfuly deleted";
     }
 }

@@ -22,32 +22,32 @@ namespace Business.Concrete
         {
             if (color.ColorName.Length < 2)
             {
-                return new ErrorDataResult<Color>(MessagesAboutColors.ColorNameInvalid);
+                return new ErrorDataResult<Color>(MessagesAboutColor.ColorNameInvalid);
             }
             _colorDal.Add(color);
-            return new SuccessResult(MessagesAboutColors.ColorAdded);
+            return new SuccessResult(MessagesAboutColor.ColorAdded);
         }
 
         public IResult Delete(Color color)
         {
             _colorDal.Delete(color);
-            return new SuccessResult(MessagesAboutColors.ColorDeleted);
+            return new SuccessResult(MessagesAboutColor.ColorDeleted);
         }
 
         public IDataResult<List<Color>> GetAll()
         {
-            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), MessagesAboutColors.ColorsListed); ;
+            return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), MessagesAboutColor.ColorsListed); ;
         }
 
         public IDataResult<Color> GetById(int id)
         {
             _colorDal.Get(c => c.ColorId == id);
-            return new SuccessDataResult<Color>(MessagesAboutColors.ColorGetted);
+            return new SuccessDataResult<Color>(MessagesAboutColor.ColorGetted);
         }
 
         public IResult Update(Color color)
         {
-            return new SuccessResult(MessagesAboutColors.ColorUpdated);
+            return new SuccessResult(MessagesAboutColor.ColorUpdated);
         }
     }
 }
