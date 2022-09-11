@@ -11,7 +11,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            //CarManagerTest();
+            CarManagerTest();
             //BrandManagerTest();
             //ColorManagerTest();
         }
@@ -19,10 +19,8 @@ namespace ConsoleUI
         private static void ColorManagerTest()
         {
             ColorManager colorManager = new ColorManager(new EfColorDal());
-            //Buradaki ekleme işlemi hata verecektir sebebi ColorId sütununun veritabanında primary key olmasıdır.
-            colorManager.Add(new Color() { ColorId = 1, ColorName = "Beyaz" });
-            colorManager.Add(new Color() { ColorId = 2, ColorName = "Kırmızı" });
-            foreach (var color in colorManager.GetAll())
+            var result = colorManager.GetAll();
+            foreach (var color in result.Data)
             {
                 Console.WriteLine(color.ColorName);
             }
@@ -31,7 +29,8 @@ namespace ConsoleUI
         private static void BrandManagerTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            foreach (var brand in brandManager.GetAll())
+            var result = brandManager.GetAll();
+            foreach (var brand in result.Data)
             {
                 Console.WriteLine(brand.BrandName);
             }
@@ -40,17 +39,22 @@ namespace ConsoleUI
         private static void CarManagerTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetAll())
+            var result = carManager.GetAll();
+            Console.WriteLine(result.Message);
+            foreach (var car in result.Data)
             {
+                //Console.WriteLine(result.Message);
                 Console.WriteLine(car.Name);
+                
             }
-            foreach (var carDetails in carManager.GetCarDetails())
-            {
-                Console.WriteLine("Car Name = " + carDetails.CarName+"\n" +
-                    "Brand = " + carDetails.BrandName + "\n" +
-                    "Color = " + carDetails.CarName + "\n" +
-                    "Dailiy Price = " + carDetails.DailyPrice);
-            }
+
+            //foreach (var carDetails in carManager.GetCarDetails().Data)
+            //{
+            //    Console.WriteLine("Car Name = " + carDetails.CarName+"\n" +
+            //        "Brand = " + carDetails.BrandName + "\n" +
+            //        "Color = " + carDetails.CarName + "\n" +
+            //        "Dailiy Price = " + carDetails.DailyPrice);
+            //}
         }
     }
 }

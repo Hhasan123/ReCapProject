@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -18,60 +20,65 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),MessagesAboutCar.CarsListed);
         }
 
-        public List<Car> GetCarsByBrandId(int id)
+        public IDataResult<List<Car>> GetCarsByBrandId(int id)
         {
-            return _carDal.GetAll(c => c.BrandId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == id));
         }
 
-        public List<Car> GetByDailyPrice(decimal min, decimal max)
+        public IDataResult<List<Car>> GetByDailyPrice(decimal min, decimal max)
         {
-            return _carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice >= max);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.DailyPrice >= min && c.DailyPrice >= max));
         }
 
-        public List<Car> GetCarsByColorId(int id)
+        public IDataResult<List<Car>> GetCarsByColorId(int id)
         {
-            return _carDal.GetAll(c => c.ColorId == id);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
-            if (car.DailyPrice <= 0 || car.Name.Length < 2)
+            if (car.Name.Length < 2)
             {
-                Console.WriteLine("Araç kiralama ücreti 0 dan büyük olmalı ve araç ismi minimum 2 karakterli olmalıdır.");
+                return new ErrorDataResult<Car>(MessagesAboutCar.CarNameInvalid);
             }
-            else
+            else if(car.DailyPrice <= 0)
             {
-                _carDal.Add(car);
+                return new ErrorDataResult<Car>(MessagesAboutCar.CarDailyPriceInvalid);
             }
+            _carDal.Add(car);
+            return new SuccessDataResult<Car>(MessagesAboutCar.CarAdded);
 
-        }
-
-        public void Update(Car car)
-        {
-            if (car.DailyPrice <= 0 || car.Name.Length < 2)
-            {
-                Console.WriteLine("Araç kiralama ücreti 0 dan büyük olmalı ve araç ismi minimum 2 karakterli olmalıdır.");
-            }
-            else
-            {
-                _carDal.Update(car);
             }
 
+        public IResult Update(Car car)
+        {
+            if (car.Name.Length < 2)
+            {
+                return new ErrorDataResult<Car>(MessagesAboutCar.CarNameInvalid);
+            }
+            else if(car.DailyPrice <= 0)
+            {
+                return new ErrorDataResult<Car>(MessagesAboutCar.CarDailyPriceInvalid);
+            }
+            _carDal.Update(car);
+            return new SuccessDataResult<Car>(MessagesAboutCar.CarUpdated);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessDataResult<Car>(MessagesAboutCar.CarDeleted);   
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            _carDal.GetCarDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(MessagesAboutCar.CarsListed); 
         }
     }
 }
