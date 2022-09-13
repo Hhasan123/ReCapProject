@@ -13,5 +13,6 @@ namespace Business.Constants.Messages
         public static string CustomerGetted = "Customer getted";
         public static string CustomerUpdated = "Customer successfuly updated.";
         public static string CustomerDeleted = "Customer successfuly deleted";
+        public static string CustomerNotFound = "Customer not found";
     }
 }

@@ -34,8 +34,13 @@ namespace Business.Concrete
 
         public IResult Delete(Customer customer)
         {
-            _customerDal.Delete(customer);
-            return new SuccessResult(MessagesAboutCustomer.CustomerDeleted);
+            if (customer.CustomerId == _customerDal.Get(c => c.CustomerId == customer.CustomerId).CustomerId)
+            {
+                _customerDal.Delete(customer);
+                return new SuccessResult(MessagesAboutCustomer.CustomerDeleted);
+            }
+            return new ErrorResult(MessagesAboutCustomer.CustomerNotFound);
+
         }
 
         public IDataResult<List<Customer>> GetAll()

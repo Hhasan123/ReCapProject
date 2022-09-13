@@ -7,10 +7,11 @@ namespace Business.Concrete
     public static class MessageAboutRentals
     {
         public static string DateInvalid = "Date is invalid";
-        public static string RentalAdded = "User successfuly added.";
-        public static string RentalsListed = "Users Listed.";
-        public static string RentalGetted = "User getted";
-        public static string RentalUpdated = "User successfuly updated.";
-        public static string RentalDeleted = "User successfuly deleted";
+        public static string RentalAdded = "Rental successfuly added.";
+        public static string RentalsListed = "Rentals Listed.";
+        public static string RentalGetted = "Rental getted";
+        public static string RentalUpdated = "Rental successfuly updated.";
+        public static string RentalDeleted = "Rental successfuly deleted";
+        public static string RentalNotFound = "Rental Not Found";
     }
 }

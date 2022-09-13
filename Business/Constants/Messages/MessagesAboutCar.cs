@@ -13,5 +13,7 @@ namespace Business.Constants
         public static string CarDailyPriceInvalid = "Car daily price must be more than 0.";
         public static string CarUpdated = "Car successfuly updated.";
         public static string CarDeleted = "Car successfuly deleted.";
+        public static string CarGetted = "Car successfuly getted";
+        public static string CarNotFound = "The car to be delete was not found";
     }
 }

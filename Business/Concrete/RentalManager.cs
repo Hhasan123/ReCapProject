@@ -19,7 +19,7 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            if (rental.RentDate>rental.ReturnDate)
+            if (rental.RentDate > rental.ReturnDate)
             {
                 return new ErrorResult(MessageAboutRentals.DateInvalid);
             }
@@ -29,8 +29,13 @@ namespace Business.Concrete
 
         public IResult Delete(Rental rental)
         {
-            _rentalDal.Delete(rental);
-            return new SuccessResult(MessageAboutRentals.RentalUpdated);
+            if (rental.RentId == _rentalDal.Get(r => r.RentId == rental.RentId).RentId)
+            {
+                _rentalDal.Delete(rental);
+                return new SuccessResult(MessageAboutRentals.RentalUpdated);
+            }
+            return new ErrorResult(MessageAboutRentals.RentalNotFound);
+
         }
 
         public IDataResult<List<Rental>> GetAll()

@@ -16,5 +16,6 @@ namespace Business.Constants.Messages
         public static string UserSurnameInvalid = "User surname is invalid.";
         public static string UserPasswordInvalid = "User password is invalid";
         public static string UserEmailNotAppropriate = "Email is not appropriate";
+        public static string UserNotFound = "User not found";
     }
 }

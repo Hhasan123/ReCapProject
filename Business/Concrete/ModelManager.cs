@@ -30,8 +30,13 @@ namespace Business.Concrete
 
         public IResult Delete(Model model)
         {
-            _modelDal.Delete(model);
-            return new SuccessResult(MessagesAboutModel.ModelDeleted);
+            if (model.ModelId == _modelDal.Get(m => m.ModelId == model.ModelId).ModelId)
+            {
+                _modelDal.Delete(model);
+                return new SuccessResult(MessagesAboutModel.ModelDeleted);
+            }
+            return new ErrorResult(MessagesAboutModel.ModelNotFound);
+
         }
 
         public IDataResult<List<Model>> GetAll()

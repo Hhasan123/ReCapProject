@@ -12,5 +12,6 @@ namespace Business.Constants
         public static string ColorGetted = "Color getted";
         public static string ColorUpdated = "Color successfuly updated.";
         public static string ColorDeleted = "Color successfuly deleted";
+        public static string ColorNotFound = "Color not found";
     }
 }

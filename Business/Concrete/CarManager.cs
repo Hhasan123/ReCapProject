@@ -22,7 +22,7 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),MessagesAboutCar.CarsListed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), MessagesAboutCar.CarsListed);
         }
 
         public IDataResult<List<Car>> GetCarsByBrandId(int id)
@@ -46,14 +46,14 @@ namespace Business.Concrete
             {
                 return new ErrorResult(MessagesAboutCar.CarNameInvalid);
             }
-            else if(car.DailyPrice <= 0)
+            else if (car.DailyPrice <= 0)
             {
                 return new ErrorResult(MessagesAboutCar.CarDailyPriceInvalid);
             }
             _carDal.Add(car);
             return new SuccessResult(MessagesAboutCar.CarAdded);
 
-            }
+        }
 
         public IResult Update(Car car)
         {
@@ -61,7 +61,7 @@ namespace Business.Concrete
             {
                 return new ErrorResult(MessagesAboutCar.CarNameInvalid);
             }
-            else if(car.DailyPrice <= 0)
+            else if (car.DailyPrice <= 0)
             {
                 return new ErrorResult(MessagesAboutCar.CarDailyPriceInvalid);
             }
@@ -71,13 +71,23 @@ namespace Business.Concrete
 
         public IResult Delete(Car car)
         {
-            _carDal.Delete(car);
-            return new SuccessResult(MessagesAboutCar.CarDeleted);   
+            if (car.Id == _carDal.Get(c => c.Id == car.Id).Id)
+            {
+                _carDal.Delete(car);
+                return new SuccessResult(MessagesAboutCar.CarDeleted);
+            }
+            return new ErrorResult(MessagesAboutCar.CarNotFound);
+
         }
 
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(),MessagesAboutCar.CarsListed); 
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), MessagesAboutCar.CarsListed);
+        }
+
+        public IDataResult<Car> GetByCarId(int id)
+        {
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id), MessagesAboutCar.CarGetted);
         }
     }
 }

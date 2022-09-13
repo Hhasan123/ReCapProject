@@ -30,8 +30,12 @@ namespace Business.Concrete
 
         public IResult Delete(Color color)
         {
-            _colorDal.Delete(color);
-            return new SuccessResult(MessagesAboutColor.ColorDeleted);
+            if (color.ColorId == _colorDal.Get(c => c.ColorId == color.ColorId).ColorId)
+            {
+                _colorDal.Delete(color);
+                return new SuccessResult(MessagesAboutColor.ColorDeleted);
+            }
+            return new ErrorResult(MessagesAboutColor.ColorNotFound);
         }
 
         public IDataResult<List<Color>> GetAll()

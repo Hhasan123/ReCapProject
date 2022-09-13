@@ -45,8 +45,12 @@ namespace Business.Concrete
 
         public IResult Delete(User user)
         {
-            _userDal.Delete(user);
-            return new SuccessDataResult<User>(MessagesAboutUser.UserDeleted);
+            if (user.Id == _userDal.Get(u => u.Id == user.Id).Id)
+            {
+                _userDal.Delete(user);
+                return new SuccessDataResult<User>(MessagesAboutUser.UserDeleted);
+            }
+            return new ErrorResult(MessagesAboutUser.UserNotFound);
         }
 
         public IDataResult<List<User>> GetAll()

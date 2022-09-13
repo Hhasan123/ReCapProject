@@ -12,5 +12,6 @@ namespace Business.Constants.Messages
         public static string ModelGetted = "Model getted";
         public static string ModelUpdated = "Model successfuly updated.";
         public static string ModelDeleted = "Model successfuly deleted";
+        public static string ModelNotFound = "Model not found";
     }
 }
