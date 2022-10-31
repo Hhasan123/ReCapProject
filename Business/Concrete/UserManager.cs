@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants.Messages;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,27 +22,10 @@ namespace Business.Concrete
 
         public IResult Add(User user)
         {
-            if (user.FirstName.Length < 3)
-            {
-                return new ErrorDataResult<User>(MessagesAboutUser.UserNameInvalid);
-            }
-            else if (user.LastName.Length < 3)
-            {
-                return new ErrorDataResult<User>(MessagesAboutUser.UserSurnameInvalid);
-            }
-            else if (user.Password.Length < 4)
-            {
-                return new ErrorDataResult<User>(MessagesAboutUser.UserPasswordInvalid);
-            }
-            else if (user.Email.EndsWith("@gmail.com"))
-            {
-                _userDal.Add(user);
-                return new SuccessDataResult<User>(MessagesAboutUser.UserAdded);
-            }
-            else
-            {
-                return new ErrorDataResult<User>(MessagesAboutUser.UserEmailNotAppropriate);
-            }
+            ValidationTool.Validate(new UserValidator(), user);
+            _userDal.Add(user);
+            return new SuccessDataResult<User>(MessagesAboutUser.UserAdded);
+
         }
 
         public IResult Delete(User user)
@@ -61,32 +46,14 @@ namespace Business.Concrete
 
         public IDataResult<User> GetById(int id)
         {
-            return new SuccessDataResult<User>(_userDal.Get(u=>u.Id==id), MessagesAboutUser.UserGetted);
+            return new SuccessDataResult<User>(_userDal.Get(u => u.Id == id), MessagesAboutUser.UserGetted);
         }
 
         public IResult Update(User user)
         {
-            if (user.FirstName.Length < 3)
-            {
-                return new ErrorDataResult<User>(MessagesAboutUser.UserNameInvalid);
-            }
-            else if (user.LastName.Length < 3)
-            {
-                return new ErrorDataResult<User>(MessagesAboutUser.UserSurnameInvalid);
-            }
-            else if (user.Password.Length < 4)
-            {
-                return new ErrorDataResult<User>(MessagesAboutUser.UserPasswordInvalid);
-            }
-            else if (user.Email.EndsWith("@gmail.com"))
-            {
-                _userDal.Update(user);
-                return new SuccessDataResult<User>(MessagesAboutUser.UserUpdated);
-            }
-            else
-            {
-                return new ErrorDataResult<User>(MessagesAboutUser.UserEmailNotAppropriate);
-            }
+            ValidationTool.Validate(new UserValidator(), user);
+            _userDal.Update(user);
+            return new SuccessDataResult<User>(MessagesAboutUser.UserUpdated);
         }
     }
 }

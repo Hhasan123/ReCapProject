@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,10 +21,7 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            if (rental.RentDate > rental.ReturnDate)
-            {
-                return new ErrorResult(MessageAboutRentals.DateInvalid);
-            }
+            ValidationTool.Validate(new RentalValidator(), rental);
             _rentalDal.Add(rental);
             return new SuccessResult(MessageAboutRentals.RentalAdded);
         }
@@ -50,10 +49,7 @@ namespace Business.Concrete
 
         public IResult Update(Rental rental)
         {
-            if (rental.RentDate > rental.ReturnDate)
-            {
-                return new ErrorResult(MessageAboutRentals.DateInvalid);
-            }
+            ValidationTool.Validate(new RentalValidator(), rental);
             _rentalDal.Update(rental);
             return new SuccessResult(MessageAboutRentals.RentalUpdated);
         }

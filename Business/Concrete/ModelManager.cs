@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants.Messages;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -20,10 +22,7 @@ namespace Business.Concrete
 
         public IResult Add(Model model)
         {
-            if (model.ModelName.Length < 3)
-            {
-                return new ErrorResult(MessagesAboutModel.ModelNameInvalid);
-            }
+            ValidationTool.Validate(new ModelValidator(),model);
             _modelDal.Add(model);
             return new SuccessResult(MessagesAboutModel.ModelAdded);
         }
@@ -51,10 +50,7 @@ namespace Business.Concrete
 
         public IResult Update(Model model)
         {
-            if (model.ModelName.Length < 3)
-            {
-                return new ErrorResult(MessagesAboutModel.ModelNameInvalid);
-            }
+            ValidationTool.Validate(new ModelValidator(), model);
             _modelDal.Update(model);
             return new SuccessResult(MessagesAboutModel.ModelUpdated);
         }
