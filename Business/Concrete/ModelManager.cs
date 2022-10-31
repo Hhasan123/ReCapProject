@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants.Messages;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -20,9 +21,9 @@ namespace Business.Concrete
             _modelDal = modelDal;
         }
 
+        [ValidationAspect(typeof(ModelValidator))]
         public IResult Add(Model model)
         {
-            ValidationTool.Validate(new ModelValidator(),model);
             _modelDal.Add(model);
             return new SuccessResult(MessagesAboutModel.ModelAdded);
         }
@@ -48,9 +49,9 @@ namespace Business.Concrete
             return new SuccessDataResult<Model>(_modelDal.Get(m => m.ModelId == id), MessagesAboutModel.ModelGetted);
         }
 
+        [ValidationAspect(typeof(ModelValidator))]
         public IResult Update(Model model)
         {
-            ValidationTool.Validate(new ModelValidator(), model);
             _modelDal.Update(model);
             return new SuccessResult(MessagesAboutModel.ModelUpdated);
         }
