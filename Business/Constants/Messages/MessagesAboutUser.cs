@@ -1,4 +1,4 @@
-﻿using Core.Entites.Concrete;
+﻿using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +7,15 @@ namespace Business.Constants.Messages
 {
     public class MessagesAboutUser
     {
-        public static string UserNotFound = "User not found.";
-        public static string PasswordError = "Password error.";
-        public static string SuccessfulyLogin = "Successfuly login";
-        public static string UserAlreadyExist = "User already exist";
-        public static string UserRegistered = "User registered.";
-        public static string AccessTokenCreated = "Access token created";
+        public static string UserAdded = "User successfuly added.";
+        public static string UserNameInvalid = "User name is invalid.";
+        public static string UserListed = "Users Listed.";
+        public static string UserGetted = "User getted";
+        public static string UserUpdated = "User successfuly updated.";
+        public static string UserDeleted = "User successfuly deleted";
+        public static string UserSurnameInvalid = "User surname is invalid.";
+        public static string UserPasswordInvalid = "User password is invalid";
+        public static string UserEmailNotAppropriate = "Email is not appropriate";
+        public static string UserNotFound = "User not found";
     }
 }
