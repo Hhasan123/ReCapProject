@@ -3,7 +3,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Extensions.DependencyInjection
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.RegularExpressions;
 using System.Linq;
 

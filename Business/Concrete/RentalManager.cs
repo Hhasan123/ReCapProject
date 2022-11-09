@@ -5,6 +5,7 @@ using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,7 @@ namespace Business.Concrete
 
         public IResult Delete(Rental rental)
         {
-            if (rental.RentId == _rentalDal.Get(r => r.RentId == rental.RentId).RentId)
+            if (rental.Id == _rentalDal.Get(r => r.Id == rental.Id).Id)
             {
                 _rentalDal.Delete(rental);
                 return new SuccessResult(MessageAboutRentals.RentalUpdated);
@@ -45,7 +46,13 @@ namespace Business.Concrete
 
         public IDataResult<Rental> GetById(int id)
         {
-            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.RentId == id), MessageAboutRentals.RentalGetted);
+            return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id), MessageAboutRentals.RentalGetted);
+        }
+
+        [ValidationAspect(typeof(RentalValidator))]
+        public IDataResult<List<RentalDto>> GetRentalDto()
+        {
+            return new SuccessDataResult<List<RentalDto>>(_rentalDal.GetRentalDto(), MessageAboutRentals.RentalGetted);
         }
 
         [ValidationAspect(typeof(RentalValidator))]

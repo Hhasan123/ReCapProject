@@ -30,7 +30,7 @@ namespace Business.Concrete
 
         public IResult Delete(Customer customer)
         {
-            if (customer.CustomerId == _customerDal.Get(c => c.CustomerId == customer.CustomerId).CustomerId)
+            if (customer.Id == _customerDal.Get(c => c.Id == customer.Id).Id)
             {
                 _customerDal.Delete(customer);
                 return new SuccessResult(MessagesAboutCustomer.CustomerDeleted);
@@ -46,7 +46,7 @@ namespace Business.Concrete
 
         public IDataResult<Customer> GetById(int id)
         {
-            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.CustomerId == id), MessagesAboutCustomer.CustomerGetted);
+            return new SuccessDataResult<Customer>(_customerDal.Get(c => c.Id == id), MessagesAboutCustomer.CustomerGetted);
         }
 
         [ValidationAspect(typeof(CustomerValidator))]

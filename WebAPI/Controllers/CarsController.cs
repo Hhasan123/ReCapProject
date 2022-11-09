@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebAPI.Controllers
@@ -24,9 +25,10 @@ namespace WebAPI.Controllers
 
         
         [HttpGet("getall")]
-        [Authorize(Roles ="Cars.List")]
+        //[Authorize(Roles ="Cars.List")]
         public IActionResult GetAll()
         {
+            Thread.Sleep(500);
             var result = _carService.GetAll();
             if (result.Success)
             {
@@ -86,7 +88,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        [Authorize(Roles = "Cars.Add")]
+        //[Authorize(Roles = "Cars.Add,admin")]
         public IActionResult Add(Car car)
         {
             var result = _carService.Add(car);

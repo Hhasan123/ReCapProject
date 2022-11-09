@@ -49,13 +49,13 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == id));
         }
 
-        [ValidationAspect(typeof(CarValidator))]
+        //[ValidationAspect(typeof(CarValidator))]
         [SecuredOperation("product.add,admin")]
         public IResult Add(Car car)
         {
             _carDal.Add(car);
             return new SuccessResult(MessagesAboutCar.CarAdded);
-
+             
         }
 
         [ValidationAspect(typeof(CarValidator))]
